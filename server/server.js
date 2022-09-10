@@ -3,7 +3,8 @@ import  dotenv from "dotenv";
 // add color on console log to debug
 import colors from 'colors'
 import connectDB from "./config/connection.js";
-import  products  from "./data/products-mock.js";
+import productRoutes from './routes/productRoutes.js'
+import { errorHandler, notFound } from "./util/errorMiddleware.js";
 const app = express();
 
 dotenv.config();
@@ -13,16 +14,10 @@ connectDB()
 app.get("/", (req, res) => {
     res.send("API is running");
 });
+app.use('/api/products',productRoutes)
 
-app.get("/api/products", (req, res) => {
-    res.json(products);
-});
-
-app.get("/api/products/:id", (req, res) => {
-    const product = products.find((p) => p._id === req.params.id);
-    res.json(product);
-});
-
+app.use(notFound)
+app.use(errorHandler)
 app.listen(
     PORT,
     console.log(
