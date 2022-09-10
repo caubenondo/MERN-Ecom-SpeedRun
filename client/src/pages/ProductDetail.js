@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import {
     Row,
@@ -17,10 +17,12 @@ import { productDetails } from "../actions/productAction";
 import Spiner from "../components/Spiner";
 import AlertMessage from "../components/AlertMessage";
 
-function ProductDetail() {
+function ProductDetail({ history }) {
     // working with mock json
     // const productID = useParams();
     // const product = products.find((p) => p._id === productID.id);
+    const navigate = useNavigate();
+    const [qty, setQty] = useState(1);
 
     // working with simple express
     // const [product,setProduct] = useState({})
@@ -37,6 +39,10 @@ function ProductDetail() {
         // fetchData()
         dispatch(productDetails(productID));
     }, [dispatch]);
+    
+    const addToCartHandler = () => {
+        navigate(`/cart/${productID}?qty=${qty}`);
+    };
 
     return (
         <>
@@ -101,8 +107,10 @@ function ProductDetail() {
                                             <Col>
                                                 <Form.Control
                                                     as="select"
-                                                    // value={qty}
-                                                    // onChange={(e) => setQty(e.target.value)}
+                                                    value={qty}
+                                                    onChange={(e) =>
+                                                        setQty(e.target.value)
+                                                    }
                                                 >
                                                     {[
                                                         ...Array(
@@ -124,7 +132,7 @@ function ProductDetail() {
 
                                 <ListGroup.Item>
                                     <Button
-                                        //   onClick={addToCartHandler}
+                                        onClick={addToCartHandler}
                                         className="btn-block"
                                         type="button"
                                         disabled={product.countInStock === 0}

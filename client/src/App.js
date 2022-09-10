@@ -9,8 +9,7 @@ import {
 } from "react-router-dom";
 
 
-import Home from "./pages/Home";
-import ProductDetail from './pages/ProductDetail'
+import {Home,ProductDetail,Cart} from "./pages/";
 
 function App() {
   return (
@@ -21,6 +20,8 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/product/:id' element={<ProductDetail/>}></Route>
+            <Route path='/cart/:id' element={<Cart/>}></Route>
+            <Route path='/cart' element={<Cart/>}></Route>
           </Routes>
         </Container>
         
