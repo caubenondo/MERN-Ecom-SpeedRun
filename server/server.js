@@ -6,6 +6,8 @@ import connectDB from "./config/connection.js";
 import productRoutes from './routes/productRoutes.js'
 import { errorHandler, notFound } from "./util/errorMiddleware.js";
 import * as path from 'path'
+import { fileURLToPath } from 'url';
+
 const app = express();
 
 dotenv.config();
@@ -15,6 +17,8 @@ connectDB()
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/build")));
