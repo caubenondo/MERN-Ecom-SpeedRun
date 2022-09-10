@@ -5,6 +5,7 @@ import colors from 'colors'
 import connectDB from "./config/connection.js";
 import productRoutes from './routes/productRoutes.js'
 import { errorHandler, notFound } from "./util/errorMiddleware.js";
+import * as path from 'path'
 const app = express();
 
 dotenv.config();
