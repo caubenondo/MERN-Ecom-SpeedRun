@@ -23,9 +23,9 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-app.get("/", (req, res) => {
-    res.send("API is running");
-});
+// app.get("/", (req, res) => {
+//     res.send("API is running");
+// });
 
 
 app.use('/api/products',productRoutes)
