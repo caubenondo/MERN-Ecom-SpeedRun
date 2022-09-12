@@ -58,7 +58,7 @@ const OrderDetails = () => {
     const { loading: loadingPay, success: successPay } = orderPay;
     const [clientId, setClientId] = useState();
     const navigate = useNavigate();
-    const PayPalID = { "client-id": clientId };
+    // const PayPalID = { "client-id": clientId };
     useEffect(() => {
         if (!userInfo) {
             navigate("/login");
@@ -90,7 +90,7 @@ const OrderDetails = () => {
             }
         }
         //
-    }, [dispatch, navigate, orderId, order, successPay, clientId]);
+    }, [dispatch, navigate, orderId, order, successPay]);
 
     const orderPayload = (data, actions) => {
         return actions.order.create({
@@ -109,10 +109,7 @@ const OrderDetails = () => {
 
         let paypalreturn = await actions.order.capture().then((details) => {
             console.log(details);
-            // id: req.body.id,
-            // status: req.body.status,
-            // update_time: req.body.update_time,
-            // email_address: req.body.payer.email_address,
+            
             const paymentResult = {
                 id: details.id,
                 status:details.status,
@@ -124,7 +121,7 @@ const OrderDetails = () => {
 
         });
      
-        // dispatch(payOrder(orderId,paypalreturn))
+        
     };
 
     const deliverHandler = () => {
@@ -261,9 +258,9 @@ const OrderDetails = () => {
                                         <Spiner />
                                     ) : (
                                         <PayPalScriptProvider
-                                            options={PayPalID}
+                                           
                                         >
-                                            {clientId}
+                                           
                                             <PayPalButtons
                                                 createOrder={orderPayload}
                                                 onApprove={
