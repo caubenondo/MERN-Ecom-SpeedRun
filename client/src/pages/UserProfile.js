@@ -3,7 +3,7 @@ import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserDetails } from "../actions/userActions";
+import { getUserDetails,updateUserProfile } from "../actions/userActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import AlertMessage from "../components/AlertMessage";
 import Spiner from "../components/Spiner";
@@ -19,15 +19,16 @@ const UserProfile = () => {
 
     //REDUX STUFF
     const dispatch = useDispatch();
-
+    // details
     const userDetails = useSelector((state) => state.userDetails);
     const { loading, error, user } = userDetails;
 
+    // login info
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
-    // const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-    // const { success } = userUpdateProfile;
+    const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+    const { success } = userUpdateProfile;
 
     const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ const UserProfile = () => {
                 setEmail(user.email);
             }
         }
-    }, [dispatch, navigate, userInfo, user]);
+    }, [dispatch, navigate, userInfo, user,success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -51,9 +52,9 @@ const UserProfile = () => {
             setMessage("Passwords do not match");
         } else {
             // dispatch update profile
-            // dispatch(
-            //     updateUserProfile({ id: user._id, name, email, password })
-            // );
+            dispatch(
+                updateUserProfile({ id: user._id, name, email, password })
+            );
         }
     };
 
@@ -62,7 +63,7 @@ const UserProfile = () => {
             <Col md={3}>
                 <h2>User Profile</h2>
                 {message && <AlertMessage variant="danger">{message}</AlertMessage>}
-               
+                {success && <AlertMessage variant='success'>Profile Updated</AlertMessage>}
                 {loading ? (
                     <Spiner />
                 ) : error ? (
@@ -111,7 +112,7 @@ const UserProfile = () => {
                             ></Form.Control>
                         </Form.Group>
 
-                        <Button type="submit" variant="primary">
+                        <Button type="submit" variant="primary" className="my-2">
                             Update
                         </Button>
                     </Form>

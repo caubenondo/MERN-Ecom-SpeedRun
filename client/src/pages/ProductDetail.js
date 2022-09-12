@@ -38,8 +38,8 @@ function ProductDetail({ history }) {
         // }
         // fetchData()
         dispatch(productDetails(productID));
-    }, [dispatch]);
-    
+    }, [dispatch,productID]);
+
     const addToCartHandler = () => {
         navigate(`/cart/${productID}?qty=${qty}`);
     };

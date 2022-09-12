@@ -21,11 +21,12 @@ const Login = () => {
     // routeing and redirect handling
     const location = useLocation();
     const navigate = useNavigate();
-    const redirect = location.search ? location.search.split("=")[1] : "/";
+    const redirect = location.search ? '/' + location.search.split("=")[1] : "/";
 
     useEffect(() => {
         // if use loggedIn redirect to homepage
         if (userInfo) {
+            console.log(location)
             navigate(redirect);
         }
     }, [navigate,userInfo, redirect]);

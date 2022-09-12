@@ -10,6 +10,9 @@ import {
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
     USER_DETAILS_REQUEST,
+    USER_UPDATE_PROFILE_REQUEST,
+    USER_UPDATE_PROFILE_SUCCESS,
+    USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants";
 
 // LOGIN HANDLING
@@ -121,8 +124,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             type: USER_DETAILS_SUCCESS,
             payload: data,
         });
-
-        
     } catch (error) {
         const message =
             error.response && error.response.data.message
@@ -133,6 +134,52 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         }
         dispatch({
             type: USER_DETAILS_FAIL,
+            payload: message,
+        });
+    }
+};
+
+// update
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: USER_UPDATE_PROFILE_REQUEST,
+        });
+        // get login info and token
+        const {
+            userLogin: { userInfo },
+        } = getState();
+        // setup fetch header with token
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+        // fetch
+        const { data } = await axios.put(`/api/users/profile`, user, config);
+        // Update user info
+        dispatch({
+            type: USER_UPDATE_PROFILE_SUCCESS,
+            payload: data,
+        });
+        // login user with new info
+        dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: data,
+        });
+        // update local storage
+        localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === "Not authorized, token failed") {
+            dispatch(logout());
+        }
+        dispatch({
+            type: USER_UPDATE_PROFILE_FAIL,
             payload: message,
         });
     }

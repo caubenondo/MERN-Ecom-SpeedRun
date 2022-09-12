@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 
-import {Home,ProductDetail,Cart,Login,SignUp, UserProfile} from "./pages/";
+import {Home,ProductDetail,Cart,Login,SignUp, UserProfile,Shipping} from "./pages/";
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/profile' element={<UserProfile/>}/>
+            <Route path='/shipping' element={<Shipping/>}/>
           </Routes>
         </Container>
         
