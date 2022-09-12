@@ -13,7 +13,8 @@ import {
     Shipping,
     Payment,
     SubmitOrder,
-    OrderDetails
+    OrderDetails,
+    AdminUserList
 } from "./pages/";
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
                         <Route
                             path="/orders/:id"
                             element={< OrderDetails/>}
+                        ></Route>
+                        <Route
+                            path="/admin/users"
+                            element={< AdminUserList/>}
                         ></Route>
                     </Routes>
                 </Container>

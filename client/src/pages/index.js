@@ -8,6 +8,8 @@ import Shipping from "./Shipping";
 import Payment from "./Payment";
 import SubmitOrder from "./SubmitOrder";
 import OrderDetails from "./OrderDetails";
+import AdminUserList from "./AdminUserList";
+
 
 export {
     Home,
@@ -19,5 +21,6 @@ export {
     Shipping,
     Payment,
     SubmitOrder,
-    OrderDetails
+    OrderDetails,
+    AdminUserList
 };
