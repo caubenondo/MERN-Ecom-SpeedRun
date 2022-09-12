@@ -1,6 +1,8 @@
 import Home from "./Home";
 import ProductDetail from "./ProductDetail";
 import Cart from "./Cart";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import UserProfile from "./UserProfile";
 
-
-export {Home,ProductDetail,Cart}
+export { Home, ProductDetail, Cart, Login, SignUp, UserProfile };
