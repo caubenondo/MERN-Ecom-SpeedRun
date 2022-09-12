@@ -108,17 +108,17 @@ const OrderDetails = () => {
         // Paypal
 
         let paypalreturn = await actions.order.capture().then((details) => {
-            console.log(details);
+           
             
-            const paymentResult = {
-                id: details.id,
-                status:details.status,
-                update_time:details.update_time,
-                payer: details.payer
-            }
-            dispatch(payOrder(orderId,paymentResult))
+            // const paymentResult = {
+            //     id: details.id,
+            //     status:details.status,
+            //     update_time:details.update_time,
+            //     payer: details.payer
+            // }
+            // dispatch(payOrder(orderId,paymentResult))
 
-
+            dispatch(payOrder(orderId,details))
         });
      
         
