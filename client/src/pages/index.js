@@ -7,5 +7,17 @@ import UserProfile from "./UserProfile";
 import Shipping from "./Shipping";
 import Payment from "./Payment";
 import SubmitOrder from "./SubmitOrder";
+import OrderDetails from "./OrderDetails";
 
-export { Home, ProductDetail, Cart, Login, SignUp, UserProfile,Shipping,Payment,SubmitOrder };
+export {
+    Home,
+    ProductDetail,
+    Cart,
+    Login,
+    SignUp,
+    UserProfile,
+    Shipping,
+    Payment,
+    SubmitOrder,
+    OrderDetails
+};

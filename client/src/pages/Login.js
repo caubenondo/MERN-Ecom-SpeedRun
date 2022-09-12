@@ -26,7 +26,7 @@ const Login = () => {
     useEffect(() => {
         // if use loggedIn redirect to homepage
         if (userInfo) {
-            console.log(location)
+            // console.log(location)
             navigate(redirect);
         }
     }, [navigate,userInfo, redirect]);

@@ -1,41 +1,69 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import AlertMessage from "../components/AlertMessage";
 import ProceedBar from "../components/ProceedBar";
+import { createOrder } from "../actions/orderActions";
+import { USER_DETAILS_RESET } from "../constants/userConstants";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
 const SubmitOrder = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
-    const error=-1;
+
     // reRoute
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     if (!cart.shippingAddress.address) {
-        navigate('/shipping')
-      } else if (!cart.paymentMethod) {
-        navigate('/payment')
-      }
+        navigate("/shipping");
+    } else if (!cart.paymentMethod) {
+        navigate("/payment");
+    }
 
     // decimal cal
     const addDecimals = (num) => {
-        return (Math.round(num * 100) / 100).toFixed(2)
-      }
+        return (Math.round(num * 100) / 100).toFixed(2);
+    };
     // ORDER SUMMERY LOGIC
     cart.subTotalItems = addDecimals(
         cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-    )
+    );
     // freeshipping if order more than $100
-    cart.shippingPrice = addDecimals(cart.subTotalItems > 100 ? 0 : 100)
-    cart.taxPrice = addDecimals(Number((0.15 * cart.subTotalItems).toFixed(2)))
+    cart.shippingPrice = addDecimals(cart.subTotalItems > 100 ? 0 : 100);
+    cart.taxPrice = addDecimals(Number((0.15 * cart.subTotalItems).toFixed(2)));
     cart.totalPrice = (
         Number(cart.subTotalItems) +
         Number(cart.shippingPrice) +
         Number(cart.taxPrice)
-      ).toFixed(2)
+    ).toFixed(2);
+
+    // create state for orderItems
+    const orderCreate = useSelector((state) => state.orderCreate);
+    const { order, success, error } = orderCreate;
+
+    // once success Create,then redirect
+    useEffect(() => {
+        if (success) {
+            navigate(`/orders/${order._id}`);
+            dispatch({ type: USER_DETAILS_RESET });
+            dispatch({ type: ORDER_CREATE_RESET });
+        }
+    }, [dispatch, navigate, success]);
+
     const placeOrderHandler = () => {
-       
-      }
+        // push order from the cart to server
+        dispatch(
+            createOrder({
+                orderItems: cart.cartItems,
+                shippingAddress: cart.shippingAddress,
+                paymentMethod: cart.paymentMethod,
+                itemsPrice: cart.subTotalItems,
+                shippingPrice: cart.shippingPrice,
+                taxPrice: cart.taxPrice,
+                totalPrice: cart.totalPrice,
+            })
+        );
+    };
     return (
         <>
             <ProceedBar step1 step2 step3 step4></ProceedBar>
@@ -45,7 +73,6 @@ const SubmitOrder = () => {
                         <ListGroup.Item>
                             <h2>Location/Shipping</h2>
                             <p>
-                                
                                 {cart.shippingAddress.address},{" "}
                                 {cart.shippingAddress.city}{" "}
                                 {cart.shippingAddress.postalCode},{" "}
@@ -127,7 +154,9 @@ const SubmitOrder = () => {
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 {error && (
-                                    <AlertMessage variant="danger">{error}</AlertMessage>
+                                    <AlertMessage variant="danger">
+                                        {error}
+                                    </AlertMessage>
                                 )}
                             </ListGroup.Item>
                             <ListGroup.Item>

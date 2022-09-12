@@ -12,7 +12,8 @@ import {
     UserProfile,
     Shipping,
     Payment,
-    SubmitOrder
+    SubmitOrder,
+    OrderDetails
 } from "./pages/";
 
 function App() {
@@ -35,7 +36,10 @@ function App() {
                         <Route path="/shipping" element={<Shipping />} />
                         <Route path="/payment" element={<Payment />} />
                         <Route path="/submitorder" element={<SubmitOrder />} />
-
+                        <Route
+                            path="/orders/:id"
+                            element={< OrderDetails/>}
+                        ></Route>
                     </Routes>
                 </Container>
             </main>
