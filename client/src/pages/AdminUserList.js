@@ -78,7 +78,7 @@ const AdminUserList = () => {
                                 </td>
                                 <td>
                                     <LinkContainer
-                                        to={`/admin/user/${user._id}/edit`}
+                                        to={`/admin/users/${user._id}/edit`}
                                     >
                                         <Button
                                             variant="light"

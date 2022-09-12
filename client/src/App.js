@@ -14,7 +14,8 @@ import {
     Payment,
     SubmitOrder,
     OrderDetails,
-    AdminUserList
+    AdminUserList,
+    AdminUserEdit
 } from "./pages/";
 
 function App() {
@@ -44,6 +45,10 @@ function App() {
                         <Route
                             path="/admin/users"
                             element={< AdminUserList/>}
+                        ></Route>
+                        <Route
+                            path="/admin/users/:id/edit"
+                            element={< AdminUserEdit/>}
                         ></Route>
                     </Routes>
                 </Container>

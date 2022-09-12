@@ -14,6 +14,7 @@ import {
     userUpdateProfileReducer,
     userListReducer,
     userDeleteReducer,
+    userUpdateReducer,
 } from "./redux/userReducers.js";
 import {
     orderCreateReducer,
@@ -36,7 +37,8 @@ const reducer = combineReducers({
     orderPay:orderPayReducer,
     orderListMy: orderListMyReducer,
     userList: userListReducer,
-    userDelete:userDeleteReducer
+    userDelete:userDeleteReducer,
+    userUpdate: userUpdateReducer
 });
 
 // CART STATE

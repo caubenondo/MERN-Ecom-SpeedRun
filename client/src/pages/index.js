@@ -9,6 +9,7 @@ import Payment from "./Payment";
 import SubmitOrder from "./SubmitOrder";
 import OrderDetails from "./OrderDetails";
 import AdminUserList from "./AdminUserList";
+import AdminUserEdit from "./AdminUserEdit";
 
 
 export {
@@ -22,5 +23,6 @@ export {
     Payment,
     SubmitOrder,
     OrderDetails,
-    AdminUserList
+    AdminUserList,
+    AdminUserEdit
 };
