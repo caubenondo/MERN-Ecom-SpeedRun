@@ -15,7 +15,9 @@ import {
     SubmitOrder,
     OrderDetails,
     AdminUserList,
-    AdminUserEdit
+    AdminUserEdit,
+    AdminProductList,
+    AdminProductEdit
 } from "./pages/";
 
 function App() {
@@ -49,6 +51,14 @@ function App() {
                         <Route
                             path="/admin/users/:id/edit"
                             element={< AdminUserEdit/>}
+                        ></Route>
+                        <Route
+                            path="/admin/products"
+                            element={< AdminProductList/>}
+                        ></Route>
+                        <Route
+                            path="/admin/products/:id/edit"
+                            element={< AdminProductEdit/>}
                         ></Route>
                     </Routes>
                 </Container>

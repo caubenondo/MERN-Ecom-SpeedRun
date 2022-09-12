@@ -10,7 +10,8 @@ import SubmitOrder from "./SubmitOrder";
 import OrderDetails from "./OrderDetails";
 import AdminUserList from "./AdminUserList";
 import AdminUserEdit from "./AdminUserEdit";
-
+import AdminProductList from "./AdminProductList";
+import AdminProductEdit from "./AdminProductEdit";
 
 export {
     Home,
@@ -24,5 +25,7 @@ export {
     SubmitOrder,
     OrderDetails,
     AdminUserList,
-    AdminUserEdit
+    AdminUserEdit,
+    AdminProductList,
+    AdminProductEdit,
 };
