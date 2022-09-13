@@ -52,22 +52,45 @@ const AdminProductEdit = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (successUpdate) {
-            dispatch({ type: PRODUCT_UPDATE_RESET })
-            navigate('/admin/products')
-          } else {
+            dispatch({ type: PRODUCT_UPDATE_RESET });
+            navigate("/admin/products");
+        } else {
             if (!product.name || product._id !== productId) {
-              dispatch(productDetails(productId))
+                dispatch(productDetails(productId));
             } else {
-              setName(product.name)
-              setPrice(product.price)
-              setImage(product.image)
-              setBrand(product.brand)
-              setCategory(product.category)
-              setCountInStock(product.countInStock)
-              setDescription(product.description)
+                setName(product.name);
+                setPrice(product.price);
+                setImage(product.image);
+                setBrand(product.brand);
+                setCategory(product.category);
+                setCountInStock(product.countInStock);
+                setDescription(product.description);
             }
-          }
-    }, [dispatch, product, productId,successUpdate]);
+        }
+    }, [dispatch, product, productId, successUpdate]);
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
+        setUploading(true);
+
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            };
+
+            const { data } = await axios.post("/api/upload", formData, config);
+
+            setImage(data);
+            setUploading(false);
+        } catch (error) {
+            console.error(error);
+            setUploading(false);
+        }
+    };
 
     return (
         <>
@@ -76,8 +99,10 @@ const AdminProductEdit = () => {
             </Link>
             <FormContainer>
                 <h1>Edit Product</h1>
-                {/* {loadingUpdate && <Spiner />}
-          {errorUpdate && <AlertMessage variant='danger'>{errorUpdate}</AlertMessage>} */}
+                {loadingUpdate && <Spiner />}
+                {errorUpdate && (
+                    <AlertMessage variant="danger">{errorUpdate}</AlertMessage>
+                )}
                 {loading ? (
                     <Spiner />
                 ) : error ? (
@@ -110,6 +135,15 @@ const AdminProductEdit = () => {
                                 value={image}
                                 onChange={(e) => setImage(e.target.value)}
                             ></Form.Control>
+                            <Form.Control
+                            type="file"
+                                // id="image-file"
+                                label="choose image from your comp"
+                                // custom
+                                onChange={uploadFileHandler}
+                            />
+                            {uploading && <Spiner/>}
+                
                         </Form.Group>
 
                         <Form.Group controlId="brand">
@@ -154,7 +188,11 @@ const AdminProductEdit = () => {
                             ></Form.Control>
                         </Form.Group>
 
-                        <Button type="submit" variant="primary" className="my-2">
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            className="my-2"
+                        >
                             Update
                         </Button>
                     </Form>
